@@ -51,8 +51,7 @@ name for the new upgrade profile, choose the access group you wish to
 associate with it, and specify the schedule on which the upgrades should run,
 then click the `Save` button.
 
-### How do I keep Landscape from upgrading a certain package on one of my
-servers?
+### How do I keep Landscape from upgrading a certain package on one of my servers?
 
 First find the package by clicking on `COMPUTERS`, then `PACKAGES`. Use the search
 box at the top of the screen to find the package you want. Click the triangle
@@ -81,7 +80,7 @@ command might be:
 psql -tAc "select pg_database_size('postgres')"
 ```
 
-For Run as user, enter **postgres**.
+For `Run` as user, enter **postgres**.
 
 Fill in the `Y-axis` title, then click the `Save` button at the bottom of the
 page.

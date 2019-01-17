@@ -218,9 +218,10 @@ landscape-api create-pocket staging precise ubuntu main i386 upload upload-sign-
     
 
 where:
-- staging is the name of the upload pocket to be created,
-- precise is the series,
-- ubuntu is the distribution,
-- upload is the pocket type,
+
+* `staging` is the name of the upload pocket to be created
+ * `precise` is the series
+ * `ubuntu` is the distribution
+ * `upload` is the pocket type
 
 and the rest of the parameters are the same as those for create-pocket.

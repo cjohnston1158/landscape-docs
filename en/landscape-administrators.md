@@ -9,7 +9,8 @@ your account.
 ![Administrators](../media/manageadmin1.png)
 
 On this page, the upper part of the screen shows a list of existing
-administrators and their email addresses. You may create as many as 1,000
+administrators and their email addresses. In Landscape SaaS ou may create up to
+five administrators. Landscape On-Premises allows you to have as many as 1,000
 administrators, or as few as one. If you're running Landscape On-Premises, the
 first user you create automatically become an administrator of your account. If
 you're using the hosted version of Landscape, Canonical sends you an

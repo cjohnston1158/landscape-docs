@@ -1,44 +1,44 @@
+Title: Landscape On-Premises
 ## Landscape On-Premises
 
 Landscape On-Premises, is the standalone version of Landscape that you can install on your own network.
 
 Each major Landscape version is supported for a period of one year after release. Here are the current supported releases:
 
-| **major version**                  | **Release date** | **Supported until** | **Version of Ubuntu**  | 
+| **major version**                  | **Release date** | **Supported until** | **Version of Ubuntu**  |
 | ----------------------             | ---------------- | ------------------- | ---------------------  |
 | [18.03](./ReleaseNotes18.03.md)  | 2018-Jun         | **2019-Jun**        | 16.04 LTS or 18.04 LTS |
 | [17.03](./ReleaseNotes17.03.md)  | 2017-Mar         | **2019-Mar**        | 16.04 LTS              |
 
 
-### Installing On-Prem
+### Installation
 
-Here is how you can get started:
+Landscape On-Premises consists of two parts:
 
- * **[Quickstart](./landscape-install-quickstart.md)**, for when you don't have Juju but quickly want to check out On-Prem. Not recommended for production environments when having more than 500 clients.
+ * **application server**
+ * **database server**
 
-``` 
-sudo add-apt-repository -u ppa:landscape/18.03
-sudo apt-get install landscape-server-quickstart
-```
+Depending on your deployment method, these may live on the same machine or different machines. Here is how you can get started:
 
- * **[Juju deployed](./landscape-install-juju.md)** for a truly scalable deployment. Select the bundle that best serves your environment:
+#### Quickstart
 
-**landscape-dense-maas** if you have the MAAS provider, you can deploy all the services using containers:
+**[Quickstart](./landscape-install-quickstart.md)**, for when you don't have Juju but quickly want to check out OPL. Not recommended for production environments when having more than 500 clients.
 
-``` 
-juju deploy cs:bundle/landscape-dense-maas
-```
+#### Juju deployed
 
-**landscape-scalable** each service gets its own machine. Currently that means you will need 4 machines for Landscape, and one for the controller node:
+**[Juju deployed](./landscape-install-juju.md)** for a truly scalable deployment. Select the bundle that best serves your environment:
 
-```
-juju deploy cs:bundle/landscape-scalable
-```
 
-Once the deployment has finished, grab the address of the first `haproxy` unit and access it with your browser:
+#### Manual installation
 
-```
-juju status haproxy
-```
+**[Manual installation](./landscape-install-manual.md)**: for when you don't have a suitable Juju environment but need a scalable deployment.
 
-* **[Manual installation](./landscape-install-manual.md)**: for when you don't have a suitable Juju environment but need a scalable deployment.
+### Installation requirements
+
+#### Network access
+
+The machine(s) running as the application service will need the following network access:
+
+ * http access to `usn.ubuntu.com` in order to download the USN database and detect security updates. Without this, the available updates won't be distinguished between security related and regular updates
+ * http access to the public Ubuntu archives and `changelogs.ubuntu.com`, in order to update the hash-id-database files and detect new distribution releases. Without this, the release upgrade feature won't work
+ * https access to `landscape.canonical.com` in order to query for available LDS releases. If this access is not given, the only drawback is that LDS won't display a note about the available releases in the account page.

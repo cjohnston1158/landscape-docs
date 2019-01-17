@@ -112,6 +112,6 @@ immediately, with no prompt to confirm the action.
 
 Packages are stored in repositories. A repository is simply a designated
 location that stores packages. You can manage Landscape repositories only via
-[the Landscape API][landscapeapi]
+[the Landscape API][landscapeapi].
 
 [landscapeapi]: ./api.md

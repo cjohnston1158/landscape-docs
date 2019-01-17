@@ -20,7 +20,7 @@ sudo apt-get install landscape-api
 In addition to the help information available from the Landscape GUI, the API
 is documented in Landscape's online help. Once the landscape-api command is
 installed you can get online help on all landscape-api commands using the
-syntax landscape-api COMMAND -h.
+syntax `landscape-api COMMAND -h`.
 
 Before you use the API, you must generate API credentials - that is, an API
 access key and API secret key. To do so, click on your account name in the
