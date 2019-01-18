@@ -28,7 +28,6 @@ These are the release notes for Landscape 17.03.
 
 This section describes the changes and new features in more detail.
 
- 
 ### Nova LXD (On-prem)
 
 The OpenStack Autopilot now allows the deployment of [nova-lxd](https://github.com/openstack/nova-lxd), bringing system containers to OpenStack using nova-lxd. With this feature, it's possible to pick a percentage of cores to deploy with KVM and LXD hypervisors across your compute servers.  LXD needs different images from KVM, but most workloads will operate transparently on this hypervisor choice that allows significantly denser deployments than KVM.
@@ -83,7 +82,7 @@ Alternatively, just add the Landscape 17.03 PPA and run the same commands as abo
 sudo add-apt-repository -u ppa:landscape/17.03
 sudo apt-get dist-upgrade
 ```
-When prompted, reply with `N` to any dpkg questions about configuration files so the existing files stay untouched. The quickstart package will make any needed modifications to your configuration files automatically. 
+When prompted, reply with `N` to any dpkg questions about configuration files so the existing files stay untouched. The quickstart package will make any needed modifications to your configuration files automatically.
 
 ## Non-quickstart upgrade
 
@@ -96,7 +95,7 @@ Follow these steps to perform a non-quickstart upgrade, that is, you did not use
  * double check that `UPGRADE_SCHEMA` is set to what you want in `/etc/default/landscape-server`
  * disable all the landscape-server cron jobs from `/etc/cron.d/landscape-server` in all app servers
  * Update the Landscape apache vhost as follows:
-    * Add a `Location </static>` defition to both the HTTP and HTTPS vhosts like this:
+  * Add a `Location </static>` defition to both the HTTP and HTTPS vhosts like this:
 ```
   <Location "/static">
     Header always append X-Frame-Options SAMEORIGIN
@@ -129,7 +128,7 @@ Follow these steps to perform a non-quickstart upgrade, that is, you did not use
   * Remove the `[L]` flag from the first `RewriteRule` in the HTTP vhost like shown in this diff:
 ```
 -    RewriteRule ^/r/([^/]+)/(.*) /$2 [L]
-+    RewriteRule ^/r/([^/]+)/(.*) /$2 
++    RewriteRule ^/r/([^/]+)/(.*) /$2
 ```
   * Update the existing `RewriteCond` regular expressions in the HTTPS vhost like shown in this diff:
 ```
@@ -159,11 +158,11 @@ sudo apt-get update && apt-get dist-upgrade
 ```
  * answer with `N` to any dpkg questions about Landscape configuration files
  * if you have `UPGRADE_SCHEMA` enabled in `/etc/default/landscape-server`, then the required schema upgrade will be performed as part of the package upgrade and all services will be running at the end. The upgrade is finished.
- * if `UPGRADE_SCHEMA` is disabled, then you will have failures when the services are restarted at the end of the upgrade. That's expected. You now have to perform the schema upgrade manually with this command: 
+ * if `UPGRADE_SCHEMA` is disabled, then you will have failures when the services are restarted at the end of the upgrade. That's expected. You now have to perform the schema upgrade manually with this command:
 ```
 sudo setup-landscape-server
 ```
-  After all these steps are completed, the Landscape services can be started: 
+  After all these steps are completed, the Landscape services can be started:
 ```
 sudo lsctl restart
 ```
@@ -220,8 +219,8 @@ timing:
   completed: 2016-06-23 19:24:39 +0000 UTC
   enqueued: 2016-06-23 19:24:32 +0000 UTC
   started: 2016-06-23 19:24:33 +0000 UTC
-  
-# Juju 2.x: 
+
+# Juju 2.x:
 $ juju run-action landscape-server/0 pause
 Action queued with id: 72fd7975-3e0b-4b6d-84b9-dbd76d50f6af
 $ juju show-action-output --wait 0 72fd7975-3e0b-4b6d-84b9-dbd76d50f6af
@@ -272,7 +271,7 @@ This section describes some relevant known issues that might affect your usage o
  * When launching new instances using Horizon's UI, un-check the "create a new volume" during instance creation to avoid a timeout error reported in the UI. [Bug #1644923](https://bugs.launchpad.net/bugs/).
  * Deployed clouds will get nagios alerts on conntrack checks not working. [Bug #1673064](https://bugs.launchpad.net/bugs/1673064).
  * Deployed clouds will get nagios alerts on metering.sample rabbit queue size. [Bug #1676586](https://bugs.launchpad.net/bugs/1676586).
- * There are known memory leaks in juju 2.1.2 (used to deploy the cloud) and it may eventually fail to gracefully recover.  "Add Hardware" and other OpenStack administration tasks may fail.  Standard recovery options (restarting juju daemons) should be used in the event this happens. 
+ * There are known memory leaks in juju 2.1.2 (used to deploy the cloud) and it may eventually fail to gracefully recover.  "Add Hardware" and other OpenStack administration tasks may fail.  Standard recovery options (restarting juju daemons) should be used in the event this happens.
  * Juju 2.1.2 can sometimes take a while to release nodes gracefully.  Currently landscape gives a 2 minute timeout for this graceful termination before the nodes are directly released in MAAS.
  * The `landscape-package-search` service ignores the `RUN_*` variable settings in `/etc/default/landscape-server` and will always try to start. To configure it not to start, run this command: `sudo systemctl disable landscape-package-search`. If it was already running, you will also have to stop it: `sudo service landscape-package-search stop`. This is only noticeable using multiple application servers [Bug #1675569](https://bugs.launchpad.net/landscape/+bug/1675569).
  * To upgrade to 17.03 from 16.06, you must first `do-release-upgrade` to xenial.
@@ -281,18 +280,18 @@ This section describes some relevant known issues that might affect your usage o
     * temporarily enable the `no_root_squash` option on the NFS server, which will allow the command to complete
     * mount the repository elsewhere, outside of the `/var/lib/landscape` tree. For example, to mount it under `/landscape-repository`, follow these steps:
 ```
-    sudo mkdir -m 0755 /landscape-repository 
-    sudo chown landscape:landscape /landscape-repository 
-    sudo vi /etc/landscape/service.conf <-- change repository-path to /landscape-repository 
-    sudo vi /etc/apache2/sites-enabled/<yourvhost> <-- change "Alias /repository /var/lib/landscape/landscape-repository" to "Alias /repository /landscape-repository" 
-    sudo lsctl stop 
-    sudo service apache2 stop 
-    sudo umount /var/lib/landscape/landscape-repository # may have to kill gpg-agent processes to be allowed to umount 
-    sudo mount <nfserver>:<export> -t nfs -o rw /landscape-repository 
-    # check that /landscape-repository and files/directories under it are still owned by landscape:landscape 
-    sudo service apache2 start 
-    sudo lsctl start 
-    # update /etc/fstab regarding the new mount point, to avoid surprises after a reboot 
+    sudo mkdir -m 0755 /landscape-repository
+    sudo chown landscape:landscape /landscape-repository
+    sudo vi /etc/landscape/service.conf <-- change repository-path to /landscape-repository
+    sudo vi /etc/apache2/sites-enabled/<yourvhost> <-- change "Alias /repository /var/lib/landscape/landscape-repository" to "Alias /repository /landscape-repository"
+    sudo lsctl stop
+    sudo service apache2 stop
+    sudo umount /var/lib/landscape/landscape-repository # may have to kill gpg-agent processes to be allowed to umount
+    sudo mount <nfserver>:<export> -t nfs -o rw /landscape-repository
+    # check that /landscape-repository and files/directories under it are still owned by landscape:landscape
+    sudo service apache2 start
+    sudo lsctl start
+    # update /etc/fstab regarding the new mount point, to avoid surprises after a reboot
 ```
  * Also due to the `chown` command run during postinst explained above, the upgrade can take a long time if the repository files are mounted somewhere `/var/lib/landscape`, depending on the size of the repository. On an experiment with two machines on the same gigabit switch and a 150Gb repository mounted via NFS, a test upgrade spent about 30min just in that `chown` command. While that happens, the service is down. This is being tracked as [bug #1725282](https://bugs.launchpad.net/landscape/+bug/1725282) and until a fix is explicitly mentioned in the release notes, we suggest the same workaround as for the previous case: mount the repository outside of the `/var/lib/landscape/` tree.
 
