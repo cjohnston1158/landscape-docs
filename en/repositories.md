@@ -147,7 +147,7 @@ Suppose you want to mirror an upstream repository. Basic usage looks like this:
 ```bash
 landscape-api create-pocket [--mirror-suite MIRROR-SUITE] \
 [--mirror-uri <MIRROR-URI>] <POCKETNAME> <SERIES> <DISTRIBUTION> \
-<COMPONENT>, <ARCHITECTURE>, <MODE> <GPGKEY>
+<COMPONENT> <ARCHITECTURE> <MODE> <GPGKEY>
 ```
 
 In this command, landscape-api and create-pocket are constants; the rest are
