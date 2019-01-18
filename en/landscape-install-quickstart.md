@@ -41,11 +41,11 @@ The quickstart package generates and installs a self-signed SSL certificate in `
 
 On each computer, copy that certificate over to, say, `/etc/landscape/server.pem` and add this line to the configuration file `/etc/landscape/client.conf`:
 ```
-    ssl_public_key = /etc/landscape/server.pem
+ssl_public_key = /etc/landscape/server.pem
 ```
 Then proceed with the registration request. Replace `<server>` with the FQDN of the quickstart host:
 ```
-    sudo landscape-config --account-name standalone --url https://<server>/message-system --ping-url http://<server>/ping
+sudo landscape-config --account-name standalone --url https://<server>/message-system --ping-url http://<server>/ping
 ```
 
 If you get registration errors on the client, the reason why it failed will most likely be in the `/var/log/landscape/broker.log` log file. If it's SSL related, double check:
